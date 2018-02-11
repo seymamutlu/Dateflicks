@@ -21,13 +21,8 @@ const movieSchema = new mongoose.Schema({
     service: {
       type: String,
       trim: true,
-      required: 'Please enter a service name!'
-    },
-    streamUrl: {
-        type: String,
-        trim: true,
-        required: 'Please enter the stream URL!'
-      }
+      required: 'Please enter a service name!' //Netflix or Apple or Amazon ...
+    }
   });
   
   // Define our indexes
