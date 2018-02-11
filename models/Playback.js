@@ -22,7 +22,8 @@ const playbackSchema = new mongoose.Schema({
       required: 'You must supply a movie!'
     },
     timeElapsedinSeconds: {
-      type: Number
+      type: Number,
+      default: 0
     },
     status: {
       type: Boolean,
