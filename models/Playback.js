@@ -26,7 +26,7 @@ const playbackSchema = new mongoose.Schema({
       default: 0
     },
     status: {
-      type: Boolean,
+      type: String,
       default: false
     }
   });
