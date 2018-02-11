@@ -11,40 +11,52 @@ const playbackResponder = new cote.Responder({
 const playbackPublisher = new cote.Publisher({
   name: 'playback publisher',
   namespace: 'playback',
-  broadcasts: ['update']
+  broadcasts: ['update','resume request','stop request']
 });
+
+const playbackSubscriber = new cote.Subscriber({
+    name: 'playback subscriber',
+    namespace: 'playback'
+  });
 
 playbackResponder.on('*', console.log);
 
-playbackResponder.on('start', async (req, res) => {
-  const newplayback = new playback(req.playback);
+//Status in onStart at the beginning
+playbackResponder.on('create', async (req, res) => {
+  const newplayback = new playback(req.playback); 
   playback = await newplayback.save();
   updatePlaybacks();
   res.send(playback);
 });
 
-playbackResponder.on('stop request', async(req, res) => {
+/* playbackResponder.on('stop request', async(req, res) => {
     console.log("Publishing stop request for your partner!");
-    playbackPublisher.publish('stopRequest', req);
+    playbackPublisher.publish('stop request', req);
 });
 
 playbackResponder.on('resume request', async(req, res) => {
     console.log("Publishing resume request for your partner!");
-    playbackPublisher.publish('resumeRequest', req);
-});
+    playbackPublisher.publish('resume request', req);
+}); */
 
-playbackResponder.on('stop', async(req, res) => {
+playbackResponder.on('stop accepted', async(req, res) => {
     console.log("Stopping the playback!");
-    req.playback.status = 0;
+    req.playback.status = "onPause";
     updatePlaybacks();
 });
 
-playbackResponder.on('resume', async(req, res) => {
+playbackResponder.on('resume accepted', async(req, res) => {
     console.log("Resuming the playback!");
-    req.playback.status = 1;
+    req.playback.status = "onPlay";
     updatePlaybacks();
 });
 
+playbackResponder.on('finish', async (req, res) => {
+    req.playback.status = "onEnd"
+    updatePlaybacks();
+    res.send(playback);
+  });
+  
 
 async function updatePlaybacks() {
     playbacks = await playback.find();
