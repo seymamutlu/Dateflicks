@@ -1,6 +1,5 @@
 const express = require('express'),
   app = express(),
-  port = process.env.PORT || 10101,
   mongoose = require('mongoose'),
   bodyParser = require('body-parser'),
   server = require('http').Server(app),
@@ -11,7 +10,7 @@ const express = require('express'),
 mongoose.Promise = global.Promise;
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
-
+const port = process.env.PORT || 10101;
 // Connect to our Database and handle an bad connections
 mongoose.connect(process.env.DATABASE, function(err) {
     if (err) {

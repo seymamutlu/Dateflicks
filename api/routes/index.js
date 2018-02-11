@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const playbackService = require('../services/playbackService');
 const notificationService = require('../services/notificationService');
+const movieService = require('../services/movieService');
+const reviewService = require('../services/reviewService');
+const userService = require('../services/userService');
 
 const cote = require('cote');
 

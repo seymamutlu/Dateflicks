@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const movie = mongoose.model('movie');
+const movie = mongoose.model('Movie');
 const User = mongoose.model('User');
-const multer = require('multer');
-const uuid = require('uuid');
 const cote = require('cote');
 
 
